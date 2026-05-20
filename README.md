@@ -1,6 +1,6 @@
-# caloriEE 🍎🥗
+# Calorie Tracker
 
-`caloriEE` is a full-stack calorie tracking and nutritional planning web application. It integrates a MERN stack (MongoDB, Express, React, Node.js) web application with a Python-based Machine Learning service that performs image-based food recognition.
+`Calorie Tracker` is a full-stack calorie tracking and nutritional planning web application. It integrates a MERN stack (MongoDB, Express, React, Node.js) web application with a Python-based Machine Learning service that performs image-based food recognition.
 
 > [!NOTE]  
 > **Project Status: Work in Progress (WIP)**  
@@ -10,11 +10,11 @@
 
 ## 🚀 Key Features
 
-*   **Custom BMR & TDEE Calculation**: Personalized daily calorie targets calculated dynamically using the **Mifflin–St Jeor** formula based on user health metrics (age, gender, height, weight, and activity level).
-*   **AI Food Recognition**: Upload images of meals to recognize food items via a TensorFlow/FastAPI machine learning model.
-*   **Vector Food Recommendation**: Search and match foods or recommend alternatives using vector-based similarity matching.
-*   **Complete Food Log**: Log meals, track daily macro targets (protein, fat, carbs), and visualize progress.
-*   **Robust Seed System**: Quick setup with standard predefined foods mapped to various categories and nutritional specs.
+- **Custom BMR & TDEE Calculation**: Personalized daily calorie targets calculated dynamically using the **Mifflin–St Jeor** formula based on user health metrics (age, gender, height, weight, and activity level).
+- **AI Food Recognition**: Upload images of meals to recognize food items via a TensorFlow/FastAPI machine learning model.
+- **Vector Food Recommendation**: Search and match foods or recommend alternatives using vector-based similarity matching.
+- **Complete Food Log**: Log meals, track daily macro targets (protein, fat, carbs), and visualize progress.
+- **Robust Seed System**: Quick setup with standard predefined foods mapped to various categories and nutritional specs.
 
 ---
 
@@ -35,25 +35,28 @@ caloriEE/
 
 ## 🛠️ Tech Stack
 
-*   **Frontend**: React (Vite), TailwindCSS, Recharts (for analytics), Lucide React (for icons)
-*   **Backend**: Node.js, Express, MongoDB (Mongoose), JSON Web Tokens (JWT) for authentication
-*   **ML Service**: Python, TensorFlow, FastAPI, Uvicorn, Pillow, NumPy
-*   **Database**: MongoDB (Local or Atlas)
+- **Frontend**: React (Vite), TailwindCSS, Recharts (for analytics), Lucide React (for icons)
+- **Backend**: Node.js, Express, MongoDB (Mongoose), JSON Web Tokens (JWT) for authentication
+- **ML Service**: Python, TensorFlow, FastAPI, Uvicorn, Pillow, NumPy
+- **Database**: MongoDB (Local or Atlas)
 
 ---
 
 ## ⚙️ Setup and Installation
 
 ### 1. Prerequisites
+
 Make sure you have the following installed on your machine:
-*   [Node.js](https://nodejs.org/) (v16+)
-*   [MongoDB](https://www.mongodb.com/try/download/community) (running locally on port `27017` or a MongoDB Atlas URI)
-*   [Python 3.8+](https://www.python.org/downloads/)
-*   [Git](https://git-scm.com/)
+
+- [Node.js](https://nodejs.org/) (v16+)
+- [MongoDB](https://www.mongodb.com/try/download/community) (running locally on port `27017` or a MongoDB Atlas URI)
+- [Python 3.8+](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/)
 
 ---
 
 ### 2. Backend Server Setup (`server/`)
+
 1. Navigate to the `server/` folder.
 2. Install Node dependencies:
    ```bash
@@ -80,11 +83,12 @@ Make sure you have the following installed on your machine:
    cd server
    npm run dev
    ```
-   *The backend will be running on [http://localhost:5001](http://localhost:5001).*
+   _The backend will be running on [http://localhost:5001](http://localhost:5001)._
 
 ---
 
 ### 3. Frontend Client Setup (`client/`)
+
 1. Navigate to the `client/` folder:
    ```bash
    cd client
@@ -97,16 +101,18 @@ Make sure you have the following installed on your machine:
    ```bash
    npm run dev
    ```
-   *The client will be running on [http://localhost:5173](http://localhost:5173).*
+   _The client will be running on [http://localhost:5173](http://localhost:5173)._
 
 ---
 
 ### 4. ML Server Setup (`ml-server/`)
+
 1. Navigate to the `ml-server/` folder:
    ```bash
    cd ml-server
    ```
 2. Create and activate a Python virtual environment:
+
    ```bash
    # On Windows
    python -m venv venv
@@ -116,6 +122,7 @@ Make sure you have the following installed on your machine:
    python3 -m venv venv
    source venv/bin/activate
    ```
+
 3. Install the required Python packages:
    ```bash
    pip install -r requirements.txt
@@ -124,18 +131,21 @@ Make sure you have the following installed on your machine:
    ```bash
    uvicorn main:app --reload --port 8000
    ```
-   *The ML service will be running on [http://localhost:8000](http://localhost:8000).*
+   _The ML service will be running on [http://localhost:8000](http://localhost:8000)._
 
 ---
 
 ## 🛠️ Current Development Tasks (WIP)
+
 As the project is in a development phase, here is what we are working on:
-*   [ ] Refining TensorFlow model accuracy for local food categories.
-*   [ ] Enhancing frontend analytics graphs for weekly macro summaries.
-*   [ ] Adding test coverage to backend authentication routes.
-*   [ ] Deploying backend & ML API endpoints.
+
+- [ ] Refining TensorFlow model accuracy for local food categories.
+- [ ] Enhancing frontend analytics graphs for weekly macro summaries.
+- [ ] Adding test coverage to backend authentication routes.
+- [ ] Deploying backend & ML API endpoints.
 
 ---
 
 ## 📄 License
+
 This project is open-source and available under the [MIT License](LICENSE).
