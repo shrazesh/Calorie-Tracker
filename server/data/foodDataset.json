@@ -1,0 +1,713 @@
+[
+  {
+    "name": "Oatmeal",
+    "calories": 150,
+    "category": "Breakfast",
+    "tags": [
+      "grain",
+      "fiber",
+      "healthy",
+      "warm"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Greek Yogurt",
+    "calories": 100,
+    "category": "Breakfast",
+    "tags": [
+      "dairy",
+      "protein",
+      "probiotic",
+      "healthy"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Scrambled Eggs",
+    "calories": 200,
+    "category": "Breakfast",
+    "tags": [
+      "protein",
+      "egg",
+      "warm",
+      "savory"
+    ],
+    "healthScore": 7
+  },
+  {
+    "name": "Banana",
+    "calories": 105,
+    "category": "Snacks",
+    "tags": [
+      "fruit",
+      "sweet",
+      "potassium",
+      "healthy"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Grilled Chicken Breast",
+    "calories": 280,
+    "category": "Lunch",
+    "tags": [
+      "protein",
+      "lean",
+      "healthy",
+      "grilled"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Brown Rice Bowl",
+    "calories": 300,
+    "category": "Lunch",
+    "tags": [
+      "grain",
+      "fiber",
+      "healthy",
+      "carb"
+    ],
+    "healthScore": 8
+  },
+  {
+    "name": "Fried Rice",
+    "calories": 450,
+    "category": "Lunch",
+    "tags": [
+      "grain",
+      "fried",
+      "carb",
+      "savory"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Burger",
+    "calories": 600,
+    "category": "Lunch",
+    "tags": [
+      "meat",
+      "bread",
+      "fatty",
+      "fast_food"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Grilled Steak",
+    "calories": 500,
+    "category": "Dinner",
+    "tags": [
+      "meat",
+      "protein",
+      "grilled",
+      "iron"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Baked Salmon",
+    "calories": 380,
+    "category": "Dinner",
+    "tags": [
+      "fish",
+      "protein",
+      "omega3",
+      "healthy"
+    ],
+    "healthScore": 1
+  },
+  {
+    "name": "Pizza Slice",
+    "calories": 350,
+    "category": "Dinner",
+    "tags": [
+      "bread",
+      "cheese",
+      "fast_food",
+      "carb"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Apple",
+    "calories": 95,
+    "category": "Snacks",
+    "tags": [
+      "fruit",
+      "healthy",
+      "fiber",
+      "sweet"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Chips",
+    "calories": 300,
+    "category": "Snacks",
+    "tags": [
+      "fried",
+      "salty",
+      "processed",
+      "snack"
+    ],
+    "healthScore": 2
+  },
+  {
+    "name": "Water",
+    "calories": 0,
+    "category": "Snacks",
+    "tags": [
+      "drink",
+      "healthy",
+      "hydration",
+      "low_cal"
+    ],
+    "healthScore": 10
+  },
+  {
+    "name": "Soda",
+    "calories": 150,
+    "category": "Snacks",
+    "tags": [
+      "sweet",
+      "processed",
+      "drink",
+      "sugar"
+    ],
+    "healthScore": 1
+  },
+  {
+    "name": "Pepperoni Pizza",
+    "calories": 285,
+    "category": "Dinner",
+    "tags": [
+      "cheese",
+      "classic",
+      "italian",
+      "comfort_food"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Masala Dosa",
+    "calories": 350,
+    "category": "Breakfast",
+    "tags": [
+      "indian",
+      "crispy",
+      "savory",
+      "vegan_option"
+    ],
+    "healthScore": 7
+  },
+  {
+    "name": "Cheeseburger",
+    "calories": 550,
+    "category": "Lunch",
+    "tags": [
+      "meat",
+      "american",
+      "fast_food",
+      "iconic"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Sushi (Nigiri)",
+    "calories": 200,
+    "category": "Lunch",
+    "tags": [
+      "japanese",
+      "seafood",
+      "fresh",
+      "healthy"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Chocolate Brownie",
+    "calories": 330,
+    "category": "Snacks",
+    "tags": [
+      "dessert",
+      "sweet",
+      "chocolate",
+      "baked"
+    ],
+    "healthScore": 2
+  },
+  {
+    "name": "Chicken Tikka Masala",
+    "calories": 400,
+    "category": "Dinner",
+    "tags": [
+      "curry",
+      "spicy",
+      "creamy",
+      "indian"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Tacos al Pastor",
+    "calories": 180,
+    "category": "Lunch",
+    "tags": [
+      "mexican",
+      "street_food",
+      "spicy",
+      "meat"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "French Croissant",
+    "calories": 270,
+    "category": "Breakfast",
+    "tags": [
+      "pastry",
+      "french",
+      "buttery",
+      "flaky"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Spaghetti Bolognese",
+    "calories": 450,
+    "category": "Dinner",
+    "tags": [
+      "pasta",
+      "italian",
+      "meat",
+      "classic"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Ramen (Tonkotsu)",
+    "calories": 600,
+    "category": "Dinner",
+    "tags": [
+      "japanese",
+      "noodle",
+      "soup",
+      "savory"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Fish and Chips",
+    "calories": 700,
+    "category": "Lunch",
+    "tags": [
+      "fried",
+      "seafood",
+      "british",
+      "heavy"
+    ],
+    "healthScore": 2
+  },
+  {
+    "name": "Falafel Wrap",
+    "calories": 350,
+    "category": "Lunch",
+    "tags": [
+      "middle_eastern",
+      "vegetarian",
+      "protein",
+      "fiber"
+    ],
+    "healthScore": 8
+  },
+  {
+    "name": "Pad Thai",
+    "calories": 480,
+    "category": "Dinner",
+    "tags": [
+      "thai",
+      "noodle",
+      "sweet_and_sour",
+      "peanuts"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Caesar Salad",
+    "calories": 300,
+    "category": "Lunch",
+    "tags": [
+      "salad",
+      "crunchy",
+      "creamy",
+      "vegetable"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Chicken Biryani",
+    "calories": 500,
+    "category": "Dinner",
+    "tags": [
+      "rice",
+      "spicy",
+      "aromatic",
+      "indian"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Glazed Donut",
+    "calories": 240,
+    "category": "Snacks",
+    "tags": [
+      "sweet",
+      "fried",
+      "sugar",
+      "breakfast"
+    ],
+    "healthScore": 1
+  },
+  {
+    "name": "Macaroni and Cheese",
+    "calories": 380,
+    "category": "Dinner",
+    "tags": [
+      "cheese",
+      "pasta",
+      "comfort_food",
+      "creamy"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Greek Salad",
+    "calories": 200,
+    "category": "Lunch",
+    "tags": [
+      "fresh",
+      "mediterranean",
+      "healthy",
+      "vegetable"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Ice Cream (Vanilla)",
+    "calories": 150,
+    "category": "Snacks",
+    "tags": [
+      "cold",
+      "sweet",
+      "dairy",
+      "dessert"
+    ],
+    "healthScore": 2
+  },
+  {
+    "name": "Steak Frites",
+    "calories": 750,
+    "category": "Dinner",
+    "tags": [
+      "meat",
+      "french",
+      "savory",
+      "heavy"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Momo",
+    "calories": 250,
+    "category": "Snacks",
+    "tags": [
+      "dumpling",
+      "nepali",
+      "savory",
+      "steamed"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "dal Bhat",
+    "calories": 550,
+    "category": "Lunch",
+    "tags": [
+      "staple",
+      "balanced",
+      "lentil",
+      "traditional",
+      "nepali"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Dhido",
+    "calories": 760,
+    "category": "Lunch",
+    "tags": [
+      "traditional",
+      "buckwheat",
+      "millet",
+      "healthy",
+      "fiber"
+    ],
+    "healthScore": 10
+  },
+  {
+    "name": "Saag Vaat",
+    "calories": 500,
+    "category": "Lunch",
+    "tags": [
+      "spinach",
+      "rice",
+      "healthy",
+      "vegan",
+      "traditional"
+    ],
+    "healthScore": 10
+  },
+  {
+    "name": "Chicken Momo",
+    "calories": 350,
+    "category": "Snacks",
+    "tags": [
+      "dumpling",
+      "steamed",
+      "popular",
+      "street_food"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Buff Momo",
+    "calories": 380,
+    "category": "Snacks",
+    "tags": [
+      "dumpling",
+      "buffalo_meat",
+      "iconic",
+      "savory"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Dal Bhat Tarkari",
+    "calories": 650,
+    "category": "Lunch",
+    "tags": [
+      "staple",
+      "balanced",
+      "lentil",
+      "traditional"
+    ],
+    "healthScore": 9
+  },
+  {
+    "name": "Sel Roti",
+    "calories": 300,
+    "category": "Breakfast",
+    "tags": [
+      "rice_bread",
+      "fried",
+      "sweet",
+      "festival"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Chatpate",
+    "calories": 250,
+    "category": "Snacks",
+    "tags": [
+      "street_food",
+      "spicy",
+      "puffed_rice",
+      "tangy"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Panipuri",
+    "calories": 180,
+    "category": "Snacks",
+    "tags": [
+      "street_food",
+      "spicy",
+      "water_balls",
+      "tangy"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Chowmein (Veg)",
+    "calories": 450,
+    "category": "Lunch",
+    "tags": [
+      "noodles",
+      "stir_fry",
+      "popular",
+      "savory"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Thakali Khana Set",
+    "calories": 850,
+    "category": "Dinner",
+    "tags": [
+      "premium",
+      "ghee",
+      "deluxe",
+      "traditional"
+    ],
+    "healthScore": 8
+  },
+  {
+    "name": "Gundruk Dhido",
+    "calories": 500,
+    "category": "Lunch",
+    "tags": [
+      "fermented",
+      "authentic",
+      "high_fiber",
+      "traditional"
+    ],
+    "healthScore": 10
+  },
+  {
+    "name": "Samosa",
+    "calories": 320,
+    "category": "Snacks",
+    "tags": [
+      "fried",
+      "potato",
+      "tea_time",
+      "savory"
+    ],
+    "healthScore": 3
+  },
+  {
+    "name": "Yomari",
+    "calories": 350,
+    "category": "Snacks",
+    "tags": [
+      "newari",
+      "steamed",
+      "sweet",
+      "molasses"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Bara (Wo)",
+    "calories": 220,
+    "category": "Breakfast",
+    "tags": [
+      "lentil_pancake",
+      "newari",
+      "protein",
+      "savory"
+    ],
+    "healthScore": 8
+  },
+  {
+    "name": "Sekuwa (Chicken)",
+    "calories": 300,
+    "category": "Dinner",
+    "tags": [
+      "grilled",
+      "meat",
+      "bbq",
+      "spicy"
+    ],
+    "healthScore": 7
+  },
+  {
+    "name": "Choila (Buff)",
+    "calories": 350,
+    "category": "Snacks",
+    "tags": [
+      "spicy",
+      "grilled",
+      "newari",
+      "meat"
+    ],
+    "healthScore": 6
+  },
+  {
+    "name": "Kheer",
+    "calories": 320,
+    "category": "Snacks",
+    "tags": [
+      "pudding",
+      "sweet",
+      "dairy",
+      "dessert"
+    ],
+    "healthScore": 5
+  },
+  {
+    "name": "Aloo Tama",
+    "calories": 150,
+    "category": "Lunch",
+    "tags": [
+      "bamboo_shoot",
+      "potato",
+      "sour",
+      "soup"
+    ],
+    "healthScore": 8
+  },
+  {
+    "name": "Puri Tarkari",
+    "calories": 400,
+    "category": "Breakfast",
+    "tags": [
+      "fried",
+      "potato_curry",
+      "morning",
+      "heavy"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Chiura (Beaten Rice)",
+    "calories": 110,
+    "category": "Snacks",
+    "tags": [
+      "dry",
+      "grain",
+      "light",
+      "traditional"
+    ],
+    "healthScore": 7
+  },
+  {
+    "name": "Laphing",
+    "calories": 200,
+    "category": "Snacks",
+    "tags": [
+      "tibetan_origin",
+      "spicy",
+      "cold_noodle",
+      "street_food"
+    ],
+    "healthScore": 4
+  },
+  {
+    "name": "Milk Tea (Chiya)",
+    "calories": 90,
+    "category": "Snacks",
+    "tags": [
+      "drink",
+      "sweet",
+      "daily",
+      "hot"
+    ],
+    "healthScore": 4
+  }
+]
