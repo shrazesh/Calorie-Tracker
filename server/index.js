@@ -9,10 +9,10 @@ import userRoutes from './routes/user.js';
 import foodRoutes from './routes/food.js';
 import reportRoutes from './routes/report.js';
 import recommendationRoutes from './routes/recommendation.js';
-import foodRecognitionRoutes from './routes/foodRecognitionRoutes.js';
 import foodsRoutes from './routes/foods.js';
 import recommendRoutes from './routes/recommend.js';
 import nutritionRoutes from './routes/nutrition.js';
+import aiScannerRoutes from './routes/aiScanner.routes.js';
 
 dotenv.config();
 console.log('JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO');
@@ -20,6 +20,7 @@ console.log('JWT_SECRET loaded:', process.env.JWT_SECRET ? 'YES' : 'NO');
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use('/uploads', express.static('uploads'));
 
 // Register routes
 app.use('/api/auth', authRoutes);
@@ -29,9 +30,9 @@ app.use('/api/foodlog', foodRoutes);
 app.use('/api/foods', foodsRoutes);
 app.use('/api/report', reportRoutes);
 app.use('/api/recommendations', recommendationRoutes);
-app.use('/api/food-recognition', foodRecognitionRoutes);
 app.use('/api/recommend', recommendRoutes);
 app.use('/api/nutrition', nutritionRoutes);
+app.use('/api/ai-scanner', aiScannerRoutes);
 
 const PORT = process.env.PORT || 5000;
 

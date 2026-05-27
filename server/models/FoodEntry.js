@@ -16,10 +16,18 @@ const foodEntrySchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   recognition_method: {
     type: String,
-    enum: ["manual", "cnn_image", "barcode"],
+    enum: ["manual", "cnn_image", "barcode", "ai_scanner"],
     default: "manual"
   },
-  cnn_confidence: { type: Number }
+  cnn_confidence: { type: Number },
+  imageUrl: { type: String },
+  aiGenerated: { type: Boolean, default: false },
+  confidenceScore: { type: Number },
+  detectedFoods: [{
+    label: { type: String },
+    confidence: { type: Number },
+    bbox: [{ type: Number }]
+  }]
 }, { timestamps: true });
 
 const FoodEntry = mongoose.model('FoodEntry', foodEntrySchema);
