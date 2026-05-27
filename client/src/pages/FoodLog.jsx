@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { Plus, Search, Edit3, Trash2, X, Check, Calendar, Filter, Camera, Zap } from 'lucide-react';
 import toast, { Toaster } from 'react-hot-toast';
-import FoodScanner from '../components/FoodScanner/FoodScanner';
+import AiScannerCard from '../components/aiScanner/AiScannerCard';
 import { useAuth } from '../context/AuthContext';
 
 const categories = ['Breakfast', 'Lunch', 'Dinner', 'Snacks'];
@@ -268,7 +268,7 @@ export default function FoodLog() {
       {/* Scanner Section */}
       {showScanner && (
         <div className="animate-slide-down">
-          <FoodScanner onLogged={() => { fetchEntries(); setShowScanner(false); }} />
+          <AiScannerCard onComplete={() => { fetchEntries(); setShowScanner(false); }} />
         </div>
       )}
 
