@@ -55,15 +55,73 @@ export const scanImage = async (req, res) => {
     const matchedFoodsForTips = [];
     const initialMacros = { calories: 0, protein: 0, carbs: 0, fat: 0, fiber: 0 };
 
-    for (const det of detections) {
-      const dbMatches = await nutritionMatcherService.matchFoodToDb(det.label);
-      
-      if (dbMatches && dbMatches.length > 0) {
-        const topMatch = dbMatches[0];
-        matchedFoodsForTips.push(topMatch);
+    // Dynamic import inside controller since this is a new service
+    const { default: nutritionValidator } = await import('../services/nutritionValidator.service.js');
 
-        // Calculate default macro contribution (assuming 1 serving of 100g)
-        const defaults = servingCalculatorService.calculateNutritionByServing(topMatch, 1, '100 g');
+    for (const det of detections) {
+      if (!det.top_predictions || !det.top_predictions.length) continue;
+      
+      const validatedMatches = [];
+      let primaryMatch = null;
+      let primaryConfidence = 0;
+
+      // Iterate through Top 5 predictions
+      for (const prediction of det.top_predictions) {
+        const dbMatches = await nutritionMatcherService.matchFoodToDb(prediction.label);
+        
+        // Find the first db match that passes macro validation
+        for (const food of dbMatches) {
+          if (nutritionValidator.isValidMacro(food, prediction.label)) {
+            validatedMatches.push({
+              id: food._id,
+              name: food.name,
+              display_name: food.display_name,
+              calories_per_100g: food.calories_per_100g,
+              protein_g: food.protein_g,
+              carbs_g: food.carbs_g,
+              fats_g: food.fats_g,
+              fiber_g: food.fiber_g,
+              servings: food.servings,
+              category: food.category,
+              predictedLabel: prediction.label,
+              confidence: prediction.confidence
+            });
+            break; // Move to the next prediction in the Top 5
+          }
+        }
+      }
+
+      // 🚨 CRITICAL FALLBACK: If strict validation rejected EVERYTHING (e.g. database missing items),
+      // force the top matched DB item into the array so the user doesn't get a blank "No food detected" screen.
+      if (validatedMatches.length === 0 && det.top_predictions.length > 0) {
+        const fallbackMatches = await nutritionMatcherService.matchFoodToDb(det.top_predictions[0].label);
+        if (fallbackMatches && fallbackMatches.length > 0) {
+           const fallbackFood = fallbackMatches[0];
+           validatedMatches.push({
+              id: fallbackFood._id,
+              name: fallbackFood.name,
+              display_name: fallbackFood.display_name,
+              calories_per_100g: fallbackFood.calories_per_100g,
+              protein_g: fallbackFood.protein_g,
+              carbs_g: fallbackFood.carbs_g,
+              fats_g: fallbackFood.fats_g,
+              fiber_g: fallbackFood.fiber_g,
+              servings: fallbackFood.servings,
+              category: fallbackFood.category,
+              predictedLabel: det.top_predictions[0].label,
+              confidence: Math.min(det.top_predictions[0].confidence, 0.4) // Force low confidence so user must review
+           });
+        }
+      }
+
+      if (validatedMatches.length > 0) {
+        primaryMatch = validatedMatches[0];
+        primaryConfidence = primaryMatch.confidence;
+        matchedFoodsForTips.push(primaryMatch);
+
+        // Calculate default macro contribution for the top match (assuming 1 serving of 100g)
+        const relativeArea = det.relative_area || null;
+        const defaults = servingCalculatorService.calculateNutritionByServing(primaryMatch, 1, '100 g', relativeArea);
         initialMacros.calories += defaults.calories;
         initialMacros.protein += defaults.protein;
         initialMacros.carbs += defaults.carbs;
@@ -71,22 +129,13 @@ export const scanImage = async (req, res) => {
         initialMacros.fiber += defaults.fiber;
         
         formattedDetections.push({
-          label: det.label,
-          confidence: det.confidence,
-          confidence_percent: `${(det.confidence * 100).toFixed(1)}%`,
+          label: primaryMatch.predictedLabel,
+          confidence: primaryConfidence,
+          confidence_percent: `${(primaryConfidence * 100).toFixed(1)}%`,
           bbox: det.bbox,
-          matchedFoods: dbMatches.map(food => ({
-            id: food._id,
-            name: food.name,
-            display_name: food.display_name,
-            calories_per_100g: food.calories_per_100g,
-            protein_g: food.protein_g,
-            carbs_g: food.carbs_g,
-            fats_g: food.fats_g,
-            fiber_g: food.fiber_g,
-            servings: food.servings,
-            category: food.category
-          }))
+          relative_area: relativeArea,
+          quantity: defaults.suggestedQuantity || 1, // Passed down to UI
+          matchedFoods: validatedMatches // The array of Top 5 validated DB items
         });
       }
     }
@@ -171,7 +220,7 @@ export const confirmScan = async (req, res) => {
       // Create FoodEntry in database
       const entry = await FoodEntry.create({
         userId: req.user.id,
-        food: foodItem?._id || null,
+        food: foodItem?._id || undefined,
         foodName: foodName || 'Unknown Food Item',
         servingLabel: servingLabel || '100 g',
         quantity: quantityValue,

@@ -7,7 +7,7 @@
 import axios from 'axios';
 import FormData from 'form-data';
 
-const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://localhost:8000';
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL || 'http://127.0.0.1:8000';
 
 class AiScannerService {
   /**
@@ -26,7 +26,7 @@ class AiScannerService {
         headers: {
           ...form.getHeaders()
         },
-        timeout: 15000 // Allow up to 15 seconds for model cold start/inference
+        timeout: 60000 // Allow up to 60 seconds for model cold start/inference and weight downloading
       });
 
       return {

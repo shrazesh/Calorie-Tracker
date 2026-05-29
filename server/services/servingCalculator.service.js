@@ -1,6 +1,6 @@
 /**
  * Purpose: Provide dynamic serving size scaling and macro calculations.
- * Inputs: FoodItem, quantity, serving label.
+ * Inputs: FoodItem, quantity, serving label, relative_area (optional).
  * Outputs: Scaled nutritional values.
  */
 
@@ -10,10 +10,19 @@ class ServingCalculatorService {
    * @param {Object} foodItem - The FoodItem document from MongoDB
    * @param {number} quantity - The numeric quantity (e.g. 1.5, 2)
    * @param {string} servingLabel - The serving label (e.g. "1 bowl", "100 g")
+   * @param {number} [relativeArea=null] - Optional bounding box area relative to whole image (0.0 to 1.0)
    * @returns {Object} Calculated nutrition { calories, protein, carbs, fat, fiber, gramsTotal }
    */
-  calculateNutritionByServing(foodItem, quantity, servingLabel = '100 g') {
-    const qty = parseFloat(quantity) || 1;
+  calculateNutritionByServing(foodItem, quantity, servingLabel = '100 g', relativeArea = null) {
+    let qty = parseFloat(quantity) || 1;
+    
+    // If AI provides relative bounding box area, use it to tweak the default serving size
+    // Example heuristic: if box is huge (>50% of image), it's probably a large serving
+    // This only applies if the user hasn't manually tweaked it (we assume first AI pass is qty=1)
+    if (relativeArea !== null && qty === 1) {
+        if (relativeArea > 0.6) qty = 1.5;      // Very large portion
+        else if (relativeArea < 0.15) qty = 0.5; // Very small portion
+    }
     
     // Find the serving configuration
     let serving = foodItem.servings?.find(
@@ -51,7 +60,8 @@ class ServingCalculatorService {
       carbs,
       fat,
       fiber,
-      gramsTotal
+      gramsTotal,
+      suggestedQuantity: qty // pass back the AI-suggested quantity
     };
   }
 }
