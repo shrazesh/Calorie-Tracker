@@ -1,5 +1,5 @@
 """
-Purpose: Preprocess images using OpenCV to resize, normalize, and enhance contrast.
+Purpose: Preprocess images using OpenCV to resize, normalize, enhance contrast, and denoise.
 Inputs: Raw image bytes.
 Outputs: Preprocessed OpenCV image.
 """
@@ -22,8 +22,9 @@ def preprocess_image(cv_image: np.ndarray, target_size: int = 640) -> np.ndarray
     """
     Process OpenCV image:
     1. Resize while maintaining aspect ratio (letterboxing/padding).
-    2. Enhance contrast using CLAHE (Contrast Limited Adaptive Histogram Equalization).
-    3. Improve brightness if image is too dark.
+    2. Denoise and sharpen (Gaussian blur reduction).
+    3. Enhance contrast using CLAHE (Contrast Limited Adaptive Histogram Equalization).
+    4. Improve brightness if image is too dark.
     """
     h, w = cv_image.shape[:2]
     
@@ -34,6 +35,16 @@ def preprocess_image(cv_image: np.ndarray, target_size: int = 640) -> np.ndarray
     # Resize
     resized = cv2.resize(cv_image, (new_w, new_h), interpolation=cv2.INTER_AREA)
     
+    # Advanced Preprocessing: Denoising
+    # Using FastNlMeansDenoising for color images
+    denoised = cv2.fastNlMeansDenoisingColored(resized, None, 10, 10, 7, 21)
+    
+    # Advanced Preprocessing: Sharpening (Gaussian blur reduction)
+    kernel_sharpening = np.array([[-1,-1,-1], 
+                                  [-1, 9,-1],
+                                  [-1,-1,-1]])
+    sharpened = cv2.filter2D(denoised, -1, kernel_sharpening)
+
     # Letterbox padding to make it a square (target_size x target_size)
     top = (target_size - new_h) // 2
     bottom = target_size - new_h - top
@@ -42,7 +53,7 @@ def preprocess_image(cv_image: np.ndarray, target_size: int = 640) -> np.ndarray
     
     # Add dark padding
     square_img = cv2.copyMakeBorder(
-        resized, top, bottom, left, right, 
+        sharpened, top, bottom, left, right, 
         cv2.BORDER_CONSTANT, value=[114, 114, 114]
     )
     

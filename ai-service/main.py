@@ -56,5 +56,16 @@ async def predict(image: UploadFile = File(...)):
 async def health():
     return {"status": "ok", "model": "loaded"}
 
+@app.post("/train")
+async def train():
+    """
+    Trigger training pipeline. In a real environment, this should dispatch
+    a background celery task. For now, it returns instructions.
+    """
+    return {
+        "success": True, 
+        "message": "Training pipeline should be run via CLI: python training_pipeline.py --epochs 20"
+    }
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
