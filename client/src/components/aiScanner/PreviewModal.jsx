@@ -38,7 +38,7 @@ const PreviewModal = ({ isOpen, onClose, onConfirm, isConfirming }) => {
                 Meal Category
               </label>
               <div className="grid grid-cols-2 gap-3">
-                {['Breakfast', 'Lunch', 'Dinner', 'Snack'].map((type) => (
+                {['Breakfast', 'Lunch', 'Dinner', 'Snacks'].map((type) => (
                   <button
                     key={type}
                     onClick={() => setMealType(type)}

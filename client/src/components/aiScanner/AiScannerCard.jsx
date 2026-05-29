@@ -11,42 +11,24 @@ import MacroSummary from './MacroSummary';
 import NutritionTips from './NutritionTips';
 import PreviewModal from './PreviewModal';
 import { scanFoodImage, confirmFoodScan } from '../../services/aiScannerApi';
+import { calculateTotalNutrition } from '../../utils/nutritionCalculator';
 
 const AiScannerCard = ({ onComplete }) => {
   const [step, setStep] = useState('INPUT'); // 'INPUT' | 'CAMERA' | 'SCANNING' | 'RESULTS'
   const [imagePreview, setImagePreview] = useState(null);
   const [scanResult, setScanResult] = useState(null);
   
-  // Detections state that the user can edit
   const [detections, setDetections] = useState([]);
-  const [totals, setTotals] = useState(null);
   
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
 
-  // Recalculate totals whenever detections change
-  useEffect(() => {
-    if (!detections.length) {
-      setTotals(null);
-      return;
-    }
-    
-    let cals = 0, pro = 0, carbs = 0, fat = 0, fib = 0;
-    detections.forEach(d => {
-      const food = d.matchedFood;
-      if (!food) return;
-      const factor = (d.quantity || 1) / (food.serving_size_g || 100); // basic fallback calculation
-      // Actually, if we have dynamic recalculation, we might just scale based on default quantity, 
-      // but assuming the backend sends base values per default serving.
-      // Let's keep it simple: multiply base values by quantity
-      cals += (food.calories || 0) * (d.quantity || 1);
-      pro += (food.protein_g || 0) * (d.quantity || 1);
-      carbs += (food.carbs_g || 0) * (d.quantity || 1);
-      fat += (food.fat_g || 0) * (d.quantity || 1);
-      fib += (food.fiber_g || 0) * (d.quantity || 1);
-    });
-    
-    setTotals({ calories: cals, protein_g: pro, carbs_g: carbs, fat_g: fat, fiber_g: fib });
+  // Calculate totals using useMemo
+  const totals = React.useMemo(() => {
+    console.log('[DEBUG] Recalculating totals. Current detections state:', detections);
+    const result = calculateTotalNutrition(detections);
+    console.log('[DEBUG] Calculated totals:', result);
+    return result;
   }, [detections]);
 
   const processImage = async (file) => {
@@ -56,8 +38,8 @@ const AiScannerCard = ({ onComplete }) => {
     try {
       const result = await scanFoodImage(file);
       setScanResult(result);
-      setDetections(result.data.detections || []);
-      setTotals(result.data.totals);
+      setDetections(result.detections || []);
+      // initialMacros from backend gets immediately overwritten by the accurate recalculation in useEffect, which is correct
       setStep('RESULTS');
     } catch (error) {
       console.error(error);
@@ -85,19 +67,25 @@ const AiScannerCard = ({ onComplete }) => {
 
     setIsConfirming(true);
     try {
-      const items = detections.map(d => ({
-        foodItemId: d.matchedFood._id,
-        quantity: d.quantity || 1,
-        servingUnit: d.servingUnit || 'g',
-        confidence: d.confidence
-      }));
+      // Map to correct backend structure expected by confirmScan controller
+      const meals = detections.map(d => {
+        const firstFoodId = d.matchedFoods && d.matchedFoods.length > 0 ? (d.matchedFoods[0].id || d.matchedFoods[0]._id) : null;
+        const activeFoodId = d.activeFoodId || firstFoodId;
+        return {
+          foodId: activeFoodId,
+          quantity: d.quantity || 1,
+          servingLabel: d.servingUnit || '100 g',
+          customName: d.label,
+          confidence: d.confidence
+        };
+      });
 
       await confirmFoodScan({
-        items,
-        mealType,
+        meals,
+        category: mealType,
         date,
-        overallConfidence: scanResult?.data?.overallConfidence || 1.0,
-        imageUrl: scanResult?.data?.imageUrl
+        confidenceScore: 0.9, // Default overall confidence
+        imageUrl: scanResult?.imageUrl
       });
 
       toast.success('Successfully logged food!');
@@ -116,11 +104,10 @@ const AiScannerCard = ({ onComplete }) => {
     setImagePreview(null);
     setScanResult(null);
     setDetections([]);
-    setTotals(null);
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto">
+    <div className="w-full max-w-5xl mx-auto">
       <div className="flex items-center gap-4 mb-6">
         {step === 'RESULTS' && (
           <button 
@@ -203,21 +190,21 @@ const AiScannerCard = ({ onComplete }) => {
             key="results"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="grid lg:grid-cols-3 gap-6"
+            className="grid lg:grid-cols-12 gap-6"
           >
-            {/* Left Column: Image & Tips */}
-            <div className="lg:col-span-1 space-y-6">
+            {/* Left Column: Image & Tips (col-span-5) */}
+            <div className="lg:col-span-5 space-y-6">
               <div className="bg-white rounded-3xl p-4 shadow-sm border border-slate-200">
                 <div className="aspect-square rounded-2xl overflow-hidden bg-slate-100">
                   <img src={imagePreview} alt="Scanned food" className="w-full h-full object-cover" />
                 </div>
               </div>
               
-              <NutritionTips tips={scanResult?.data?.tips} />
+              <NutritionTips tips={scanResult?.tips} />
             </div>
 
-            {/* Right Column: Detections & Macros */}
-            <div className="lg:col-span-2 flex flex-col gap-6">
+            {/* Right Column: Detections & Macros (col-span-7) */}
+            <div className="lg:col-span-7 flex flex-col gap-6">
               {detections.length === 0 ? (
                 <div className="bg-white rounded-3xl p-8 shadow-sm border border-slate-200 flex flex-col items-center justify-center text-center h-full">
                   <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
@@ -236,7 +223,7 @@ const AiScannerCard = ({ onComplete }) => {
                 </div>
               ) : (
                 <>
-                  <MacroSummary totals={totals} />
+                  <MacroSummary totals={totals} healthScore={scanResult?.healthScore} />
                   
                   <div className="space-y-4">
                     <h3 className="font-bold text-slate-800 px-2 flex justify-between items-end">
